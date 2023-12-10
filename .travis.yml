@@ -1,0 +1,10 @@
+language: python
+python:
+  - "3.11"
+install:
+  - poetry install
+  - pip install pytest-cov codecov
+script:
+  - pytest --cov=src tests
+after_success:
+  - codecov
