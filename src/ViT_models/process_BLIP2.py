@@ -39,7 +39,7 @@ def caption_image(image, model, processor, mode):
         inputs = processor(image, text=prompt, return_tensors="pt").to(device, torch.float16)
     else:
         inputs = processor(image, return_tensors="pt").to(device, torch.float16)
-    generated_ids = model.generate(**inputs, max_new_tokens=50)
+    generated_ids = model.generate(**inputs)
     generated_text = processor.decode(generated_ids[0], skip_special_tokens=True).strip()
     return generated_text
 
