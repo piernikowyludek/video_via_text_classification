@@ -1,0 +1,35 @@
+Region: us-east-1
+Image:
+  Os: ubuntu2004
+# Headnode settings
+HeadNode:
+  InstanceType: c5.2xlarge
+  Networking:
+    SubnetId: subnet-25ac8408
+  Ssh:
+    KeyName: testec2
+  LocalStorage:
+    RootVolume:
+      Size: 40
+# Scheduler settings and queues
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+  - Name: g-queue
+    ComputeResources:
+      - Name: g52xlarge 
+        Instances:
+        - InstanceType: g5.2xlarge
+        MinCount: 0
+        MaxCount: 3
+    Networking:
+      SubnetIds:
+      - subnet-25ac8408
+# Optional: Shared storage settings
+SharedStorage:
+  - MountDir: /efs
+    Name: efs
+    StorageType: Efs
+    EfsSettings:
+      PerformanceMode: generalPurpose
+      ThroughputMode: bursting

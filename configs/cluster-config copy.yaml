@@ -1,0 +1,35 @@
+Region: us-east-1b
+Image:
+  Os: ubuntu2004
+# Headnode settings
+HeadNode:
+  InstanceType: c5.2xlarge
+  Networking:
+    SubnetId: subnet-25ac8408
+  Ssh:
+    KeyName: local-dev
+  LocalStorage:
+    RootVolume:
+      Size: 10
+# Scheduler settings and queues
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+  - Name: a10-queue
+      ComputeResources:
+      - Name: g52xlarge 
+        Instances:
+        - InstanceType: g5.2xlarge
+        MinCount: 0
+        MaxCount: 2
+      Networking:
+        SubnetIds:
+        - subnet-25ac8408
+# Optional: Shared storage settings
+SharedStorage:
+  - MountDir: /efs
+    Name: Efs
+    StorageType: Efs
+    FsxLustreSettings:
+      DeploymentType: SCRATCH_2
+      StorageCapacity: 100
