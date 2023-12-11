@@ -32,5 +32,5 @@ for i in 0 1 2; do
     sed -n "${start_line},${end_line}p" "$file_path" > "$output_file"
     
     # Call Python script with index and output file
-    python ../src/ViT_models/process_BLIP2.py  txt_file="$output_file" mode=noprompt job_index="$i"
+    srun --partition=g-queue --gres=gpu:1 python ../src/ViT_models/process_BLIP2.py  txt_file="$output_file" mode=noprompt job_index="$i"
 done
