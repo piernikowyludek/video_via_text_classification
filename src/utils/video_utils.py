@@ -1,10 +1,12 @@
 import cv2
+import os
+from pathlib import Path
 
 
 def sample_frames(video_path, num_frames=5):
     """
     Samples a specified number of equidistant frames from a given .avi video file.
-    
+
     video_path (str): Path to the .avi video file.
     num_frames (int, optional): Number of frames to sample. Defaults to 5.
 
@@ -47,3 +49,24 @@ def sample_frames(video_path, num_frames=5):
     cap.release()
 
     return sampled_frames
+
+def save_frames(frames, folder_path, video_path):
+    """
+    Saves a list of images to a specified folder.
+
+    :param frames: List of images (as NumPy arrays).
+    :param folder_path: Path to the folder where images will be saved.
+    """
+    # Create the folder if it doesn't exist
+    category = video_path.split('/')[-2]
+    video_name = video_path.split('/')[-1].with_suffix('')
+    folder_path = Path(folder_path) / category / video_name
+    folder_path.mkdir(parents=True, exist_ok=True)
+
+    image_paths = []
+    # Save each image in the specified folder
+    for i, image in enumerate(frames):
+        image_path = folder_path / f'image_{i}.jpg'
+        cv2.imwrite(image_path, image)
+        image_paths.append(image_path)
+    return image_paths
