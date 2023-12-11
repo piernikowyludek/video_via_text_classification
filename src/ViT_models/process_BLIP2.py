@@ -35,11 +35,11 @@ def run_blip2_inference(video_paths, save_path, mode, job_index):
 
 def caption_image(image, model, processor, mode):
     prompt = "What action or activity is taking place in this image?"
-    inputs = processor(image, return_tensors="pt").to(device, torch.float16)
     if mode == 'prompt':
         inputs = processor(image, text=prompt, return_tensors="pt").to(device, torch.float16)
     elif mode == 'noprompt':
-        generated_ids = model.generate(**inputs, max_new_tokens=50)
+        inputs = processor(image, return_tensors="pt").to(device, torch.float16)
+    generated_ids = model.generate(**inputs, max_new_tokens=50)
     generated_text = processor.decode(generated_ids[0], skip_special_tokens=True).strip()
     return generated_text
 

@@ -27,7 +27,7 @@ for i in 0 1 2; do
     fi
 
     output_file="${base_name}_${i}.$extension"
-
+    echo $output_file
     # Extract the relevant lines using sed
     sed -n "${start_line},${end_line}p" "$file_path" > "$output_file"
     
