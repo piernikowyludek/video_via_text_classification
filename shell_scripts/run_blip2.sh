@@ -7,6 +7,7 @@ if [ "$#" -ne 1 ]; then
 fi
 
 file_path=$1
+dir_path=$(dirname "$file_path")
 base_name=$(basename -- "$file_path")
 extension="${base_name##*.}"
 base_name="${base_name%.*}"
@@ -26,7 +27,7 @@ for i in 0 1 2; do
         end_line=$total_lines
     fi
 
-    output_file="${base_name}_${i}.$extension"
+    output_file="${dir_path}/${base_name}_${i}.$extension"
     echo $output_file
     # Extract the relevant lines using sed
     sed -n "${start_line},${end_line}p" "$file_path" > "$output_file"
